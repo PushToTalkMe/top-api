@@ -13,11 +13,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v3
       - name: Publish to registry
         uses: elgohr/Publish-Docker-Github-Action@v5
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           registry: docker.pkg.github.com
           name: docker.pkg.github.com/PushToTalkMe/top-api/top-api
