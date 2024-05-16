@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Publish to registry
-        run:
-          docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.GH_PAT }}
+        run: |
+          docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.GH_PAT }} ghcr.io
           docker build . ghcr.io/PushToTalkMe/top-api
           docker push ghcr.io/PushToTalkMe/top-api
