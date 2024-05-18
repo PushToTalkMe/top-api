@@ -5,6 +5,11 @@ import { ProductModule } from './product/product.module';
 import { ReviewModule } from './review/review.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { FilesModule } from './files/files.module';
+import { SitemapModule } from './sitemap/sitemap.module';
+import { TelegramModule } from './telegram/telegram.module';
+import { getMongoConfig } from './configs/mongo.config';
+import { getTelegramConfig } from './configs/telegram.config';
 
 @Module({
   imports: [
@@ -12,24 +17,19 @@ import { MongooseModule } from '@nestjs/mongoose';
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
-        uri:
-          'mongodb://' +
-          configService.get('MONGO_LOGIN') +
-          ':' +
-          configService.get('MONGO_PASSWORD') +
-          '@' +
-          configService.get('MONGO_HOST') +
-          ':' +
-          configService.get('MONGO_PORT') +
-          '/' +
-          configService.get('MONGO_AUTHDATABASE'),
-      }),
+      useFactory: getMongoConfig,
     }),
     AuthModule,
     TopPageModule,
     ProductModule,
     ReviewModule,
+    FilesModule,
+    SitemapModule,
+    TelegramModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: getTelegramConfig,
+    }),
   ],
 })
 export class AppModule {}
