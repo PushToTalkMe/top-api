@@ -8,9 +8,3 @@ services:
       - 3000:3000
     volumes:
       - ./.env:/opt/app/.env
-    networks:
-      - mongo_network
-networks:
-  mongo_network:
-    name: mongodb_default
-    external: true
